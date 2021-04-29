@@ -1,10 +1,21 @@
 {
     "name": "ava-sandbox",
+    "ava": {
+        "extensions": [
+            "ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ]
+    },
     "scripts": {
-		"test": "ava"
-	},
+        "test": "ava",
+        "compile-typescript": "tsc -p ./tests",
+        "start": "npm run compile-typescript && npm test"
+    },
     "devDependencies": {
         "ava": "^3.15.0",
+        "ts-node": "^9.1.1",
         "typescript": "^4.2.4"
     }
 }
