@@ -30,3 +30,21 @@ test('Webdriver sanity test', async t => {
 	t.true(await homePage.IsCurrentlyLoaded());
 });
 
+/**
+ * Sanity test to determine if the Webdriver is working* 
+ * 
+ * TODO: Scrolling and wait logic needs to be added to the browser-wrapper class in order to get this test passing
+ */
+test('Chat frame can be opened', async t => {
+	
+	// Setup
+	const driver = t.context.driver;
+	const homePage = new HomePage(driver);
+	
+	// Action
+	await homePage.load();
+	await homePage.openChatWindow();
+	
+	// Assertion
+	t.true(await homePage.chatWindowIsOpen());
+});

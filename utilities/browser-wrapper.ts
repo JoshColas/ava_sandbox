@@ -32,7 +32,13 @@ export class BrowserWrapper {
      * @returns {Promise<boolean>}
      */
     public async isVisible(selector: By): Promise<boolean> {
-        let element = await this.getElement(selector);
+        let element;
+        try {
+            element = await this.getElement(selector);
+        } catch (e) {
+            // Determining visibility doesn't require that the element be in the DOM
+            return false;
+        }
         let isVisible = await element.isDisplayed();
         return isVisible;
     }
@@ -51,4 +57,20 @@ export class BrowserWrapper {
             throw new Error('Selenium failed to find an element using selector ' + selector);
         }
     }
+
+    /**
+     * Click an element using the passed selector
+     * @param selector 
+     */
+    async click(selector: By) {
+        let element = await this.getElement(selector);
+        let isVisible = await this.isVisible(selector);
+
+        if(isVisible) {
+            await element.click();
+        } else {
+            throw new Error('Selenium was unable to find a visible element for selector ' + selector);
+        }
+    }
+
 }
