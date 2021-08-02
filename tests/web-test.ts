@@ -1,5 +1,6 @@
 import anyTest, {TestInterface} from 'ava';
 import {BrowserWrapper as webDriver} from '../utilities/browser-wrapper';
+import {HomePage} from '../page_objects/home-page';
 
 require('chromedriver');
 
@@ -17,9 +18,15 @@ test.afterEach(async t => {
 
 // Sanity test to determine if the Webdriver is working
 test('Webdriver sanity test', async t => {
+	
+	// Setup
 	const driver = t.context.driver;
-	await driver.goTo('https://elias242.wixsite.com/sandbox');
-	let pageTitle = await driver.getTitle()
-	t.true(pageTitle == pageTitle);
+	const homePage = new HomePage(driver);
+	
+	// Action
+	await homePage.load();
+	
+	// Assertion
+	t.true(await homePage.IsCurrentlyLoaded());
 });
 
